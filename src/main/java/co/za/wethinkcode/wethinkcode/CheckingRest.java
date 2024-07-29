@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class CheckingRest {
 
-    @GetMapping("/welcome")
-    public String welcome() {
-        return "Welcome Home Sim";
+    @GetMapping("/authenticate")
+    public String authenticate() {
+        return "Welcome, Mapping received";
     }
 }

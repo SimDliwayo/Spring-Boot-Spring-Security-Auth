@@ -17,7 +17,7 @@ public class MyCustomSecurityConfiguration {
         http
                 .authorizeHttpRequests(authorizeRequests -> 
                         authorizeRequests
-                                .requestMatchers("/welcome").permitAll()
+                                .requestMatchers("/authenticate").permitAll()
                                 .anyRequest().authenticated()
                 )
                 .formLogin(formLogin ->
