@@ -1,6 +1,8 @@
-package co.za.wethinkcode.wethinkcode;
+package co.za.wethinkcode.wethinkcode.controller;
 
 
+import co.za.wethinkcode.wethinkcode.AuthenticateRequest;
+import co.za.wethinkcode.wethinkcode.AuthenticateResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
