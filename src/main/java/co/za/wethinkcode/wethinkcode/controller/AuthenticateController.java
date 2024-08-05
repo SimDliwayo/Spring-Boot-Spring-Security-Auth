@@ -4,6 +4,7 @@ package co.za.wethinkcode.wethinkcode.controller;
 import co.za.wethinkcode.wethinkcode.AuthenticateRequest;
 import co.za.wethinkcode.wethinkcode.AuthenticateResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -17,13 +18,17 @@ import java.util.UUID;
 @RestController
 public class AuthenticateController {
 
+    private final AuthenticationManager authenticationManager;
+
     @Autowired
-    private AuthenticationManager authenticationManager;
+    public AuthenticateController(AuthenticationManager authenticationManager) {
+        this.authenticationManager = authenticationManager;
+    }
+
 
     @PostMapping("/authenticate")
     public ResponseEntity<?> authenticate(@RequestBody AuthenticateRequest request) {
         // Now I am validating using the username and user password.
-        try {
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword())
             );
@@ -34,19 +39,5 @@ public class AuthenticateController {
             } else {
                 return ResponseEntity.status(401).body("Authentication failed");
             }
-        } catch (Exception e) {
-            return ResponseEntity.status(401).body("Authentication failed");
-        }
-
-        // Validating, checking for emptiness
-//        if (request.getUsername() != null && !request.getUsername().isEmpty()
-//                && request.getPassword() != null && !request.getPassword().isEmpty()) {
-//            String token = UUID.randomUUID().toString(); // Generating a simple token
-//
-//            return ResponseEntity.ok(new AuthenticateResponse(token));
-//        } else {
-//            return ResponseEntity.badRequest().body("Invalid username or password");
-//        }
-
     }
 }

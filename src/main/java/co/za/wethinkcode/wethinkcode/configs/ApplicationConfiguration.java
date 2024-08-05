@@ -14,18 +14,41 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class ApplicationConfiguration {
 
 
+    /*
+    Bean for password encoding.
+     */
     @Bean
     BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
-        final AuthenticationManagerBuilder builder = (AuthenticationManagerBuilder) authConfig.getAuthenticationManager();
 
-        builder.inMemoryAuthentication()
-                .withUser(HardcodedUserDetails.getUserDetails());
-        return builder.build();
+    /*
+    UserDetailsService that returns hardcoded user details
+     */
+    @Bean
+    public UserDetailsService userDetailsService() {
+        return username -> HardcodedUserDetails.getUserDetails();
     }
+
+    /*
+    Configures the authManager using AuthenticationConfiguration.
+     */
+//    @Bean
+//    public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
+//
+//        return authConfig.getAuthenticationManager();
+//    }
+
+
+    /*
+    Setting up the AuthenticationManagerBuilder with UserDetailsServices and the encoded password.
+//     */
+//    @Bean
+//    public AuthenticationManagerBuilder configureAuthenticationManagerBuilder(AuthenticationManagerBuilder auth) throws Exception {
+//        auth.userDetailsService(userDetailsService())
+//                .passwordEncoder(passwordEncoder());
+//        return auth;
+//    }
 
 }
